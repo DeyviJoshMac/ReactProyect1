@@ -10,29 +10,43 @@
  
 
  const App = () =>{
-    const[videos, setVideos] = useState([]);
+    /*
+     no definimos nuestra variables de paso a la api, y nos salia error
+     //const[videos, setVideos] = useState([]);
+    */
 
+    /*
+        Forma alternativa de verficar
+    */
+    const [ videos , setVideos]=useState({
+        mylist:[],
+        trends: [],
+        originals: []
+    });
+    
     useEffect(()=> {
         fetch('http://localhost:3000/initalState')
         .then(response=> response.json())
         .then(data=> setVideos(data));
     }, []);
-
-    console.log(videos)
-
+ 
     return (
         <div className="App">
             <Header/>
             <Search/>
-            <Categories title="Mi Lista">
-                <Carousel>
-                    <CarouselItem/>
-                </Carousel>
-            </Categories>
+
+            { videos.mylist.length > 0 && 
+                <Categories title="Mi Lista">
+                    <Carousel>
+                        <CarouselItem/>
+                    </Carousel>
+                </Categories>
+            }
             <Categories title="Tendencias">
                 <Carousel>
-                    <CarouselItem/>
-                    <CarouselItem/>
+                    {videos.trends.map(item=>
+                        <CarouselItem key={item.id} {...item}/>
+                    )}
                 </Carousel>
             </Categories>
 
