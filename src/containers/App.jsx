@@ -10,13 +10,15 @@
  
 
  const App = () =>{
-    const[videos, setvideos]=useState([]);
+    const[videos, setVideos] = useState([]);
 
     useEffect(()=> {
         fetch('http://localhost:3000/initalState')
         .then(response=> response.json())
-        .then(data=> setvideos(data));
+        .then(data=> setVideos(data));
     }, []);
+
+    console.log(videos)
 
     return (
         <div className="App">
@@ -43,5 +45,5 @@
             <Footer/>
         </div>
     );
-    }
+}
  export default App;
